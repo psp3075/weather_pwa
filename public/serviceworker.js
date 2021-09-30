@@ -1,7 +1,15 @@
 const CACHE_NAME = "version-1";
 const urlsToCache = ["index.html", "offline.html"];
+let deferredPrompt;
 
 const self = this;
+// Initialize deferredPrompt for use later to show browser install prompt.
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  deferredPrompt = e;
+  console.log(`'beforeinstallprompt' event was fired.`);
+});
+
 //Install sw
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -32,7 +40,6 @@ self.addEventListener("activate", (e) => {
     caches.keys().then((cacheNames) =>
       Promise.all(
         cacheNames.map((cacheName) => {
-          //keep only latest cache
           if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName);
           }
