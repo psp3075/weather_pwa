@@ -3,12 +3,11 @@ const urlsToCache = ["index.html", "offline.html"];
 let deferredPrompt;
 
 const self = this;
-// Initialize deferredPrompt for use later to show browser install prompt.
-
-window.addEventListener("beforeinstallprompt", (e) => {
+self.addEventListener("beforeinstallprompt", (e) => {
   deferredPrompt = e;
   console.log(`'beforeinstallprompt' event was fired.`);
 });
+// Initialize deferredPrompt for use later to show browser install prompt.
 
 //Install sw
 self.addEventListener("install", (e) => {
